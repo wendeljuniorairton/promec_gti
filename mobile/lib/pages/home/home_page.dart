@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'ordens_page.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -8,90 +7,47 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Oficina - Visão Geral'),
+        title: const Text('Home'),
+        centerTitle: true,
       ),
-      body: ListView(
+      body: Padding(
         padding: const EdgeInsets.all(16),
-        children: [
-          _StatusCard(
-            titulo: 'Aguardando Aprovação',
-            quantidade: 2,
-            icone: Icons.assignment,
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (_) => OrdensPage()),
-              );
-            },
-          ),
-          _StatusCard(
-            titulo: 'Aguardando Peças',
-            quantidade: 3,
-            icone: Icons.hourglass_empty,
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (_) => OrdensPage()),
-              );
-            },
-          ),
-          _StatusCard(
-            titulo: 'Em Manutenção',
-            quantidade: 4,
-            icone: Icons.build,
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (_) => OrdensPage()),
-              );
-            },
-          ),
-          _StatusCard(
-            titulo: 'Finalizados',
-            quantidade: 8,
-            icone: Icons.check_circle,
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (_) => OrdensPage()),
-              );
-            },
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _StatusCard extends StatelessWidget {
-  final String titulo;
-  final int quantidade;
-  final IconData icone;
-  final VoidCallback? onTap;
-
-  const _StatusCard({
-    required this.titulo,
-    required this.quantidade,
-    required this.icone,
-    this.onTap,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      margin: const EdgeInsets.only(bottom: 12),
-      child: InkWell(
-        onTap: onTap,
-        child: ListTile(
-          leading: Icon(icone, size: 32),
-          title: Text(titulo),
-          trailing: Text(
-            quantidade.toString(),
-            style: const TextStyle(
-              fontSize: 22,
-              fontWeight: FontWeight.bold,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            const Text(
+              'Bem-vindo!',
+              style: TextStyle(
+                fontSize: 22,
+                fontWeight: FontWeight.bold,
+              ),
+              textAlign: TextAlign.center,
             ),
-          ),
+
+            const SizedBox(height: 32),
+
+            // 🔹 BOTÃO PRINCIPAL
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                padding: const EdgeInsets.symmetric(vertical: 20),
+                textStyle: const TextStyle(fontSize: 18),
+              ),
+              onPressed: () {
+                Navigator.pushNamed(context, '/orcamento');
+              },
+              child: const Text('Criar Orçamento'),
+            ),
+
+            const SizedBox(height: 24),
+
+            // 🔹 BOTÃO SECUNDÁRIO (OPCIONAL)
+            OutlinedButton(
+              onPressed: () {
+                Navigator.pushNamed(context, '/ordens');
+              },
+              child: const Text('Ordens de Serviço'),
+            ),
+          ],
         ),
       ),
     );

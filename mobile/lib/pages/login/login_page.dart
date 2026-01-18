@@ -32,6 +32,9 @@ class _LoginPageState extends State<LoginPage> {
         SnackBar(content: Text('Bem-vindo, ${usuario.nome}!')),
       );
 
+
+      Navigator.pushReplacementNamed(context, '/home');
+
       Navigator.pushReplacement(
   context,
   MaterialPageRoute(builder: (_) => const HomePage()),
