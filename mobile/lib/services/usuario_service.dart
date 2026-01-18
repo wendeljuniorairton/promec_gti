@@ -1,16 +1,16 @@
+import 'dart:convert';
 import '../models/usuario_model.dart';
+import 'api_service.dart';
 
 class UsuarioService {
   Future<UsuarioModel?> login(String email) async {
-    // Simula tempo de resposta da API
-    await Future.delayed(const Duration(seconds: 1));
+    final response = await ApiService.get('/usuarios?email=$email');
 
-    // Simula usuário encontrado
-    return UsuarioModel(
-      idUsuario: 1,
-      nome: 'Usuário Teste',
-      email: email,
-      tipoUsuario: 'cliente',
-    );
+    if (response.statusCode == 200) {
+      final data = jsonDecode(response.body);
+      return UsuarioModel.fromJson(data);
+    }
+
+    return null;
   }
 }

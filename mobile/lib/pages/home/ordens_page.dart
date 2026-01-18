@@ -4,11 +4,11 @@ import '../../services/ordem_servico_service.dart';
 import '../orcamento/orcamento_page.dart';
 
 class OrdensPage extends StatelessWidget {
-  final OrdemServicoService service = OrdemServicoService();
-
   OrdensPage({super.key});
 
-  Color statusColor(String status) {
+  final OrdemServicoService service = OrdemServicoService();
+
+  Color _statusColor(String status) {
     switch (status) {
       case 'Aguardando Peças':
         return Colors.red;
@@ -28,11 +28,19 @@ class OrdensPage extends StatelessWidget {
       body: FutureBuilder<List<OrdemServicoModel>>(
         future: service.listarOrdens(),
         builder: (context, snapshot) {
-          if (!snapshot.hasData) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
           }
+          if (snapshot.hasError) {
+            return Center(
+              child: Text('Erro: ${snapshot.error}'),
+            );
+          }
+          final ordens = snapshot.data ?? [];
 
-          final ordens = snapshot.data!;
+          if (ordens.isEmpty) {
+            return const Center(child: Text('Nenhuma ordem encontrada.'));
+          }
 
           return ListView.builder(
             itemCount: ordens.length,
@@ -40,44 +48,22 @@ class OrdensPage extends StatelessWidget {
               final ordem = ordens[index];
 
               return Card(
-  margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-  child: Padding(
-    padding: const EdgeInsets.all(12),
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          ordem.veiculo,
-          style: const TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        const SizedBox(height: 6),
-        Text('Status: ${ordem.status}'),
-        Text('Dias parado: ${ordem.diasParado}'),
-        const SizedBox(height: 10),
-
-        Align(
-          alignment: Alignment.centerRight,
-          child: ElevatedButton.icon(
-            icon: const Icon(Icons.picture_as_pdf),
-            label: const Text('Ver Orçamento'),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (_) => OrcamentoPage(),
+                margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                child: ListTile(
+                  leading: Icon(Icons.directions_car,
+                      color: _statusColor(ordem.status)),
+                  title: Text('Veículo: ${ordem.veiculoIdentificacao}'),
+                  subtitle:
+                      Text('${ordem.status} • ${ordem.diasParado} dias parado'),
+                  trailing: const Icon(Icons.picture_as_pdf),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (_) => OrcamentoPage()),
+                    );
+                  },
                 ),
               );
-            },
-          ),
-        ),
-      ],
-    ),
-  ),
-);
-
             },
           );
         },
