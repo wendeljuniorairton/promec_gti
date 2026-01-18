@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../services/usuario_service.dart';
 import '../../models/usuario_model.dart';
+import '../home/home_page.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -31,7 +32,11 @@ class _LoginPageState extends State<LoginPage> {
         SnackBar(content: Text('Bem-vindo, ${usuario.nome}!')),
       );
 
-      // Futuro: Navigator.pushReplacementNamed(context, '/home');
+      Navigator.pushReplacement(
+  context,
+  MaterialPageRoute(builder: (_) => const HomePage()),
+);
+
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Usuário não encontrado')),
