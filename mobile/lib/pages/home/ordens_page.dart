@@ -57,10 +57,12 @@ class OrdensPage extends StatelessWidget {
                       Text('${ordem.status} • ${ordem.diasParado} dias parado'),
                   trailing: const Icon(Icons.picture_as_pdf),
                   onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (_) => OrcamentoPage()),
-                    );
+                Navigator.push(
+  context,
+  MaterialPageRoute(
+    builder: (_) => OrcamentoPage(idOrdemServico: ordem.idOrdemServico),
+  ),
+);
                   },
                 ),
               );

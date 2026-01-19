@@ -1,24 +1,28 @@
-import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class ApiService {
-  static const String baseUrl = 'http://localhost:3000'; 
-  // futuramente: URL da nuvem (Render, Railway, AWS, etc.)
+  // Windows desktop: localhost funciona.
+  // Se futuramente testar no Android Emulator, você vai trocar para 10.0.2.2
+  static const String baseUrl = 'http://localhost:3000';
 
-  static Future<http.Response> get(String endpoint) async {
-    final url = Uri.parse('$baseUrl$endpoint');
-    return await http.get(url);
+  static Future<http.Response> get(String path) async {
+    final uri = Uri.parse('$baseUrl$path');
+    return http.get(uri, headers: {
+      'Content-Type': 'application/json',
+    });
   }
 
   static Future<http.Response> post(
-    String endpoint,
-    Map<String, dynamic> body,
-  ) async {
-    final url = Uri.parse('$baseUrl$endpoint');
-    return await http.post(
-      url,
-      headers: {'Content-Type': 'application/json'},
-      body: jsonEncode(body),
+    String path, {
+    required String body,
+  }) async {
+    final uri = Uri.parse('$baseUrl$path');
+    return http.post(
+      uri,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: body,
     );
   }
 }
