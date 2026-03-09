@@ -1,0 +1,19 @@
+“O aplicativo mobile foi desenvolvido utilizando Flutter, permitindo a criação de uma aplicação multiplataforma com uma única base de código.”
+
+“Os models da aplicação foram desenvolvidos de forma desacoplada da infraestrutura do banco de dados, permitindo a migração futura do PostgreSQL local para um ambiente em nuvem sem necessidade de alteração na camada de apresentação.”
+
+Flutter (App)
+   ↓
+API REST (Backend)
+   ↓
+PostgreSQL (Nuvem ou local)
+
+“O projeto utiliza o pacote HTTP para comunicação com APIs REST, sendo responsável pelo envio e recebimento de dados entre o aplicativo Flutter e o backend.”
+
+“O sistema possui uma arquitetura em camadas, com tela de autenticação integrada à camada de serviços, preparada para consumo de APIs REST e futura conexão com banco de dados em nuvem.”
+“Durante a fase inicial de desenvolvimento, a comunicação com a API foi simulada através de serviços mockados, permitindo validar os fluxos de navegação e regras de negócio antes da implementação do backend.”
+
+“O sistema identifica veículos com longos períodos de permanência na oficina, auxiliando na tomada de decisão para liberação de espaço e priorização de serviços.”
+
+“O projeto foi versionado utilizando Git e GitHub, garantindo rastreabilidade das alterações e controle de versões durante o desenvolvimento.”
+
